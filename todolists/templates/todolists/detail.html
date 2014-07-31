@@ -1,0 +1,8 @@
+
+<h1>{{ todolist.list_name }}</h1>
+
+<ul>
+{% for listitem in todolist.listitem_set.all %}
+	<li> {{ listitem.list_item_text }} </li>
+{% endfor %}
+</ul>
