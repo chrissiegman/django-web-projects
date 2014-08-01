@@ -1,13 +1,22 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views import generic
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 from todolists.models import ToDoList, ListItem
 
 # Create your views here.
 
 def index(request):
+    todolist_list = ToDoList.objects.all()
+    for todolist in todolist_list:
+        if not todolist.listitem_set.filter(is_complete=False):
+            todolist.is_complete = True
+            todolist.save()
+        else:
+            todolist.is_complete = False
+            todolist.save()
+
     incomplete_todolist_list = ToDoList.objects.filter(is_complete=False)
     completed_todolist_list = ToDoList.objects.filter(is_complete=True)
     context = {'incomplete_todolist_list': incomplete_todolist_list,
