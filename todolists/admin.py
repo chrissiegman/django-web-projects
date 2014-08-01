@@ -8,7 +8,7 @@ class ListItemInline(admin.TabularInline):
 
 class ToDoListAdmin(admin.ModelAdmin):
     fieldsets = [
-            ('To Do List', {'fields': ['list_name']}),
+            ('To Do List', {'fields': ['list_name', 'is_complete']}),
             ('Date information', {'fields': ['pub_date']}),
             ]
     inlines = [ListItemInline]

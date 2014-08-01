@@ -1,8 +1,36 @@
 
 <h1>{{ todolist.list_name }}</h1>
 
-<ul>
-{% for listitem in todolist.listitem_set.all %}
-	<li> {{ listitem.list_item_text }} </li>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+
+
+
+{% if incomplete_listitem_list %}
+<h2>Incomplete Tasks</h2>
+<form action="{% url 'todolists:toggle_completion' todolist.id %}" method="post">
+{% csrf_token %}
+{% for listitem in incomplete_listitem_list %}
+<input type="radio" name="listitem" id="listitem{{ forloop.counter }}" value="{{ listitem.id }}" />
+	<label for="listitem{{ forloop.counter }}">{{ listitem.list_item_text }}</label><br />
 {% endfor %}
-</ul>
+<br>
+<input type="submit" value="Mark as Completed" />
+</form>
+{% endif %}
+
+
+
+{% if completed_listitem_list %}
+<h2>Completed Tasks</h2>
+<form action="{% url 'todolists:toggle_completion' todolist.id %}" method="post">
+{% csrf_token %}
+{% for listitem in completed_listitem_list %}
+	<input type="radio" name="listitem" id="listitem{{ forloop.counter }}" value="{{ listitem.id }}" />
+	<label for="listitem{{ forloop.counter }}">{{ listitem.list_item_text }}</label><br />
+{% endfor %}
+<br>
+<input type="submit" value="Mark as Incomplete" />
+</form>
+{% endif %}
+

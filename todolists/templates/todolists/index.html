@@ -1,9 +1,11 @@
 
 <h1>To Do Lists</h1>
 
-{% if todolist_list %}
+
+{% if incomplete_todolist_list %}
+	<h2>Incomplete Lists</h2>
 	<ul>
-	{% for todolist in todolist_list %}
+	{% for todolist in incomplete_todolist_list %}
 	<li><a href="{% url 'todolists:detail' todolist.id %}">{{ todolist.list_name }}</a></li>
 	{% endfor %}
 	</ul>
@@ -11,4 +13,15 @@
 	<p>No lists are available.</p>
 {% endif %}
 
+
+{% if completed_todolist_list %}
+	<h2>Completed Lists</h2>
+	<ul>
+	{% for todolist in completed_todolist_list %}
+	<li><a href="{% url 'todolists:detail' todolist.id %}">{{ todolist.list_name }}</a></li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No lists are available.</p>
+{% endif %}
 
